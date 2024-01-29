@@ -1,10 +1,11 @@
-#constantes de colores del login
-COLOR_FONDO_BLANCO="#fcfcfc"
-COLOR_FONDO_AZUL = "#3a7ff6"
-COLOR_FORM ="#666a88"
+#motor para cpnectarnos con la base de datos 
+#importamos la libreria sqlalchemy como el diminutico bd
+import sqlalchemy as db
+#importamos el script de los modelos como mod
+import persistence.models as mod
 
-#Constantes de los colores del panel princiapl
-COLOR_BARRA_SUPERIOR = "#1F2329"
-COLOR_MENU_LATERAL = "#2A3138"
-COLOR_CUERPO_PRINCIPAL = "#F1FAFF"
-COLOR_MENU_CURSOR_ENCIMA = "#2F88C5"
+#cree el motor engine con la estructura para conectarnos con la base de dato ds
+engine = db.create_engine('sqlite:///db/login.sqlite', echo=True, future=True)
+
+#levante los modelos que tenemos configurados 
+mod.Base.metadata.create_all(engine)
