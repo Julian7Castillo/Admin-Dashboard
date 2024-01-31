@@ -11,7 +11,7 @@ class AuthUserRepository():
     def getUserByUserName(self, user_name: str):
         """Obtener los usarios atraves el nombre de usuario para validar los datos del usuario"""
         user: Auth_User = None 
-        with Session (self.engine) as session :
+        with Session(self.engine) as session:
             #consulta al objeto Auth_User y lo filta por el nombre del usuario y se traera el primero 
             user = session.query(Auth_User).filter_by(username=user_name).first()
         #retornas los valores del usaurio si no se logra coenctar sera none o null 

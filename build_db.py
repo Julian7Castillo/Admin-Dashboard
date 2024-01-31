@@ -9,3 +9,5 @@ engine = db.create_engine('sqlite:///db/login.sqlite', echo=True, future=True)
 
 #levante los modelos que tenemos configurados 
 mod.Base.metadata.create_all(engine)
+
+#Necesita ejecutarse antes o no funcionanra las validaciones

@@ -2,7 +2,7 @@ from sqlalchemy import Column
 from sqlalchemy import String, Integer
 from sqlalchemy.orm import declarative_base
 
-#
+#inicializar la variable base
 Base = declarative_base()
 
 #mapeo de objetos relacionados

@@ -1,10 +1,10 @@
 from tkinter import messagebox
-from tkinter.font import BOLD
 from forms.master.form_master import MasterPanel
 from forms.login.form_login_designer import FormLoginDesigner
 from persistence.repository.auth_user_repository import AuthUserRepository
 from persistence.models import Auth_User
 import util.encoding_decoding as end_dec
+from forms.register.form_Register import FormRegister
 
 class FormLogin(FormLoginDesigner):
     
@@ -19,6 +19,9 @@ class FormLogin(FormLoginDesigner):
         user_db: Auth_User = self.auth_repository.getUserByUserName(self.usuario.get())
         if(self.isUser(user_db)):
             self.isPassword(self.password.get(), user_db)
+            
+    def userRegister(self):
+        FormRegister()
             
     def isUser(self, user: Auth_User):
         """Verificacion de que el usuario exista para ser registrado """
