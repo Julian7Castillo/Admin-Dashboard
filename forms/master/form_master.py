@@ -4,6 +4,7 @@ from tkinter import font
 from config import COLOR_BARRA_SUPERIOR, COLOR_MENU_LATERAL, COLOR_CUERPO_PRINCIPAL, COLOR_MENU_CURSOR_ENCIMA
 import util.util_imagenes as utl_img
 import util.util_ventana as utl_ven
+from forms.master.form_info_design import FormularioInfoDesign
 
 class MasterPanel(tk.Tk):
     
@@ -79,25 +80,25 @@ class MasterPanel(tk.Tk):
         self.buttonSettings = tk.Button(self.menu_lateral)
         
         button_info =[
-            ("Dashboard","\uf109",self.buttonDashBoard),
-            ("Profile","\uf007",self.buttonProfile),
-            ("Picture","\uf03e",self.buttonPicture),
-            ("Info","\uf129",self.buttonInfo),
-            ("Serttings","\uf013",self.buttonSettings)
+            ("Dashboard","\uf109",self.buttonDashBoard, self.abrir_panel_info),
+            ("Profile","\uf007",self.buttonProfile, self.abrir_panel_info),
+            ("Picture","\uf03e",self.buttonPicture, self.abrir_panel_info),
+            ("Info","\uf129",self.buttonInfo, self.abrir_panel_info),
+            ("Serttings","\uf013",self.buttonSettings, self.abrir_panel_info)
         ]
         
         #ciclo para llenar las configuraciones de los diferentes botonews atravews de la tupla o diccionario
-        for text, icon, button in button_info:
-            self.configurar_boton_menu(button, text, icon, font_awesome, ancho_menu, alto_menu)
+        for text, icon, button, comando in button_info:
+            self.configurar_boton_menu(button, text, icon, font_awesome, ancho_menu, alto_menu, comando)
     
     def control_cuerpo(self):
         """Imagen en el cuerpo principal o area de trabajo"""
         label = tk.Label(self.Cuerpo_Principal, image=self.logo, bg = COLOR_CUERPO_PRINCIPAL)
         label.place(x=0, y=0, relwidth=1, relheight=1)
     
-    def configurar_boton_menu(self, button, text, icon, font_awesome, ancho_menu, alto_menu):
+    def configurar_boton_menu(self, button, text, icon, font_awesome, ancho_menu, alto_menu, comando ):
         """Funcion para establecer los valores de los botones medui¿iantre a las variables de parametros que van ingresando en el for anterior que cicla la tupla o diccionario"""
-        button.config(text=f" +{icon} {text}", anchor="w", font=font_awesome, bd=0, bg=COLOR_MENU_LATERAL, fg="white", width=ancho_menu, height=alto_menu)
+        button.config(text=f" +{icon} {text}", anchor="w", font=font_awesome, bd=0, bg=COLOR_MENU_LATERAL, fg="white", width=ancho_menu, height=alto_menu, command = comando)
         button.pack(side=tk.TOP)
         #evento para detectar el maus en los botones 
         self.bind_hover_events(button)    
@@ -122,3 +123,5 @@ class MasterPanel(tk.Tk):
         else:
             self.menu_lateral.pack(side=tk.LEFT, fill="y")
         
+    def abrir_panel_info(seld):
+        FormularioInfoDesign()
