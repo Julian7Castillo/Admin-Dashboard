@@ -6,6 +6,7 @@ import util.util_imagenes as utl_img
 import util.util_ventana as utl_ven
 from forms.master.form_info_design import FormularioInfoDesign
 from forms.master.form_sitio_construccion import FormularioSitioConstruccionDesign
+from forms.master.form_graficas_design import FormularioGraficasDesign
 
 class MasterPanel(tk.Tk):
     
@@ -25,6 +26,7 @@ class MasterPanel(tk.Tk):
         self.control_cuerpo()
     
     def config_window(self):
+        """Inicializa y configura la nueva ventana como la ventana principal """
         #self.ventana = tk.Tk() no es necesaria esta linea por que la clase ya ereda TK 
         self.title("Python GUI")
         self.iconbitmap("./img/logo.ico")
@@ -35,6 +37,7 @@ class MasterPanel(tk.Tk):
         #self.ventana.resizable(width=0, height=0) 
         
     def paneles(self):
+        """crea y ubica los paneles necesarios en la ventana principal """
         #crear paneles: barra superior, menu lateral y cuerpo principal
         self.barra_superior = tk.Frame(self, bg=COLOR_BARRA_SUPERIOR, height=50)
         self.barra_superior.pack(side=tk.TOP, fill="both")
@@ -46,6 +49,7 @@ class MasterPanel(tk.Tk):
         self.Cuerpo_Principal.pack(side=tk.RIGHT, fill="both", expand=True)
         
     def controles_barra_superior(self):
+        """Crea el panel de la barra superior """
         #Configuracion de la barra superior
         font_awesome = font.Font(family='FontAwesome', size=12)
         
@@ -65,7 +69,7 @@ class MasterPanel(tk.Tk):
         self.labelTitulo.pack(side=tk.RIGHT)
         
     def controles_menu_lateral(self):
-        """configuracion del menú lateral"""
+        """configuracion del panel para el menú lateral"""
         ancho_menu = 20
         alto_menu = 2
         font_awesome = font.Font(family='FontAwesome', size=15)
@@ -75,6 +79,7 @@ class MasterPanel(tk.Tk):
         self.labelPerfil.pack(side=tk.TOP, pady = 10)
         
         #boton del menu lateral
+        self.buttonHome = tk.Button(self.menu_lateral )
         self.buttonDashBoard = tk.Button(self.menu_lateral)
         self.buttonProfile = tk.Button(self.menu_lateral)
         self.buttonPicture = tk.Button(self.menu_lateral)
@@ -82,22 +87,23 @@ class MasterPanel(tk.Tk):
         self.buttonSettings = tk.Button(self.menu_lateral)
         
         button_info =[
-            ("Dashboard","\uf109",self.buttonDashBoard, self.abrir_panel_en_construccion),
+            ("Home","\uf110",self.buttonHome, self.abrir_panel_home),
+            ("Dashboard","\uf109",self.buttonDashBoard, self.abrir_panel_grafica),
             ("Profile","\uf007",self.buttonProfile, self.abrir_panel_en_construccion),
             ("Picture","\uf03e",self.buttonPicture, self.abrir_panel_en_construccion),
-            ("Info","\uf129",self.buttonInfo, self.abrir_panel_info),
-            ("Serttings","\uf013",self.buttonSettings, self.abrir_panel_en_construccion)
+            ("Serttings","\uf013",self.buttonSettings, self.abrir_panel_en_construccion),
+            ("Info","\uf129",self.buttonInfo, self.abrir_panel_info)
         ]
         
         #ciclo para llenar las configuraciones de los diferentes botonews atravews de la tupla o diccionario
         for text, icon, button, comando in button_info:
             self.configurar_boton_menu(button, text, icon, font_awesome, ancho_menu, alto_menu, comando)
-    
+        
     def control_cuerpo(self):
         """Imagen en el cuerpo principal o area de trabajo"""
         label = tk.Label(self.Cuerpo_Principal, image=self.logo, bg = COLOR_CUERPO_PRINCIPAL)
         label.place(x=0, y=0, relwidth=1, relheight=1)
-    
+        
     def configurar_boton_menu(self, button, text, icon, font_awesome, ancho_menu, alto_menu, comando ):
         """Funcion para establecer los valores de los botones medui¿iantre a las variables de parametros que van ingresando en el for anterior que cicla la tupla o diccionario"""
         button.config(text=f" +{icon} {text}", anchor="w", font=font_awesome, bd=0, bg=COLOR_MENU_LATERAL, fg="white", width=ancho_menu, height=alto_menu, command = comando)
@@ -124,15 +130,30 @@ class MasterPanel(tk.Tk):
             self.menu_lateral.pack_forget()
         else:
             self.menu_lateral.pack(side=tk.LEFT, fill="y")
-        
-    def abrir_panel_info(seld):
-        FormularioInfoDesign()
+    
+    #Funciones para cambiar paneles en el panel del cuyerpo principal o area de trabajo
+    def abrir_panel_home(self):
+        """Vuelve a mostrar el panel princimal con el logo """
+        self.limpiarPanel(self.Cuerpo_Principal)
+        label = tk.Label(self.Cuerpo_Principal, image=self.logo, bg = COLOR_CUERPO_PRINCIPAL)
+        label.place(x=0, y=0, relwidth=1, relheight=1)
         
     def abrir_panel_en_construccion(self):
+        """Muestra un label y una imagen indicando que el manel se encuantra en construcción """
         self.limpiarPanel(self.Cuerpo_Principal)
         FormularioSitioConstruccionDesign(self.Cuerpo_Principal, self.img_sitio_construccion)
+    
+    def abrir_panel_grafica(self):
+        """cambia el poanel presnegte por el de las graficas"""
+        self.limpiarPanel(self.Cuerpo_Principal)
+        FormularioGraficasDesign(self.Cuerpo_Principal)
+        
+    def abrir_panel_info(seld):
+        """Inicia una nueva ventana en la cual se muesatra la informacion del programa"""
+        FormularioInfoDesign()
         
     def limpiarPanel(self, panel):
         """Funcion para Destrio todos los hijos de panel gracias al winfo _children que se le indique limpiando el panel que baya encontrando por eso se encientra en un bucle parea que se pueda hubicar otro panel diferente """
         for widget in panel.winfo_children():
             widget.destroy()
+            

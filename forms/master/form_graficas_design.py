@@ -1,0 +1,58 @@
+import tkinter as tk
+from matplotlib.figure import Figure 
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+
+class FormularioGraficasDesign():
+    
+    def __init__(self, panel_principal):
+        """Constructor del lienzo en blanco del canvas"""
+        figura = Figure(figsize=(8, 6), dpi=100)
+        ax1 = figura.add_subplot(211)
+        ax2 = figura.add_subplot(212)
+        
+        figura.subplots_adjust(hspace=0.4)
+        #invocamos las gráficas
+        self.grafico1(ax1)
+        self.grafico2(ax2)
+        
+        #Unimos las graficas con tkinter
+        canvas = FigureCanvasTkAgg(figura, master=panel_principal)
+        canvas.draw()
+        canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+
+    def grafico1(self, ax):
+        """Creación del grafico 1 qua estara ubicado en el canvas"""
+        #cordenadas de las barras 
+        x = [1,2,3,4,5]
+        y = [2,4,6,8,10]
+        
+        #especificaciones de la grafica tibo de barras
+        ax.bar(x, y, label = "Gráfica 1", color="blue", alpha=0.7)
+        ax.set_title("Gráfico 1 - Gráfico de barras")
+        ax.set_xlabel("Eje X")
+        ax.set_ylabel("Eje Y")
+        ax.legend()
+        
+        #Añadir etiquta a cada barra
+        for i, v in enumerate(y):
+            ax.text(x[i] - 0.1, v + 0.1, str(v), color = "black")
+            
+        ax.grid(axis = "y", linestyle="--", alpha=0.7)
+        
+    def grafico2(self, ax):
+        """Creación del gráfico 2 qua estara ubicado en el canvas"""
+        #cordenadas de las barras 
+        x = [1,2,3,4,5]
+        y = [1,2,1,2,1]
+        
+        #especificaciones de la grafica tipo linea
+        ax.plot(x, y, label = "Gráfica 2", color="red")
+        ax.set_title("Gráfico 2 - Gráfico de lineas")
+        ax.set_xlabel("Eje X", fontsize=12)
+        ax.set_xlabel("Eje Y", fontsize=12)
+        ax.plot(x,y, label="Gráfico 2", color="red", linestyle="--", marker="o")
+        ax.annotate("punto importante", xy=(3, 1), xytext=(3.5, 1.5), arrowprops = dict(facecolor="black", shrink=0.5))
+        ax.set_xlim(0,6) #establece los limites del eje x
+        ax.set_ylim(0,3) #establece los limites del eje y
+        ax.grid(True, linestyle="--", alpha=0.6)
+        ax.legend()
