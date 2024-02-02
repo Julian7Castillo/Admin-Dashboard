@@ -10,7 +10,7 @@ class FormularioSitioConstruccionDesign():
         self.barra_inferior = tk.Frame(panel_principal)
         self.barra_inferior.pack(side=tk.BOTTOM, fill="both", expand=True)
         
-        self.labelTitulo = tk.Label(self.barra_superior, text = " Página en cosntrucción")
+        self.labelTitulo = tk.Label(self.barra_superior, text = " Panel en cosntrucción")
         self.labelTitulo.config(fg = "#222d33", font=("Roboto", 30), bg=COLOR_CUERPO_PRINCIPAL)
         self.labelTitulo.pack(side=tk.TOP, fill="both", expand=True)
         
