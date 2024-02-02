@@ -5,6 +5,7 @@ from config import COLOR_BARRA_SUPERIOR, COLOR_MENU_LATERAL, COLOR_CUERPO_PRINCI
 import util.util_imagenes as utl_img
 import util.util_ventana as utl_ven
 from forms.master.form_info_design import FormularioInfoDesign
+from forms.master.form_sitio_construccion import FormularioSitioConstruccionDesign
 
 class MasterPanel(tk.Tk):
     
@@ -16,6 +17,7 @@ class MasterPanel(tk.Tk):
         #invocando las imagenes
         self.logo = utl_img.leer_imagen("./img/logo (1).png", (560, 136))
         self.perfil = utl_img.leer_imagen("./img/Perfil.png", (100, 100))
+        self.img_sitio_construccion = utl_img.leer_imagen("./img/sitio_construccion.png", (400, 400))
         self.config_window()
         self.paneles()
         self.controles_barra_superior()
@@ -80,11 +82,11 @@ class MasterPanel(tk.Tk):
         self.buttonSettings = tk.Button(self.menu_lateral)
         
         button_info =[
-            ("Dashboard","\uf109",self.buttonDashBoard, self.abrir_panel_info),
-            ("Profile","\uf007",self.buttonProfile, self.abrir_panel_info),
-            ("Picture","\uf03e",self.buttonPicture, self.abrir_panel_info),
+            ("Dashboard","\uf109",self.buttonDashBoard, self.abrir_panel_en_construccion),
+            ("Profile","\uf007",self.buttonProfile, self.abrir_panel_en_construccion),
+            ("Picture","\uf03e",self.buttonPicture, self.abrir_panel_en_construccion),
             ("Info","\uf129",self.buttonInfo, self.abrir_panel_info),
-            ("Serttings","\uf013",self.buttonSettings, self.abrir_panel_info)
+            ("Serttings","\uf013",self.buttonSettings, self.abrir_panel_en_construccion)
         ]
         
         #ciclo para llenar las configuraciones de los diferentes botonews atravews de la tupla o diccionario
@@ -125,3 +127,12 @@ class MasterPanel(tk.Tk):
         
     def abrir_panel_info(seld):
         FormularioInfoDesign()
+        
+    def abrir_panel_en_construccion(self):
+        self.limpiarPanel(self.Cuerpo_Principal)
+        FormularioSitioConstruccionDesign(self.Cuerpo_Principal, self.img_sitio_construccion)
+        
+    def limpiarPanel(self, panel):
+        """Funcion para Destrio todos los hijos de panel gracias al winfo _children que se le indique limpiando el panel que baya encontrando por eso se encientra en un bucle parea que se pueda hubicar otro panel diferente """
+        for widget in panel.winfo_children():
+            widget.destroy()
